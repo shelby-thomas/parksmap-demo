@@ -7,9 +7,8 @@ metadata:
     app.kubernetes.io/part-of: workshop
     app.openshift.io/runtime: mongodb
   name: mongodb-nationalparks
-  namespace: parksmap-demo
 spec:
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 10
   selector:
     name: mongodb-nationalparks
