@@ -1,12 +1,6 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    app.openshift.io/connects-to: mongodb-nationalparks
-    app.openshift.io/vcs-ref: master
-    app.openshift.io/vcs-uri: https://github.com/openshift-roadshow/nationalparks.git
-  creationTimestamp: "2023-09-09T03:45:09Z"
-  generation: 33
   labels:
     app: workshop
     app.kubernetes.io/part-of: workshop
@@ -14,10 +8,7 @@ metadata:
     component: nationalparks
     createdBy: parksmap-template
     role: backend
-    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
   name: nationalparks
-  resourceVersion: "848443"
-  uid: 280fd8c2-f8a0-4c22-89b9-c8693b3e3bf6
 spec:
   replicas: 1
   revisionHistoryLimit: 10

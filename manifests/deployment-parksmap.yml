@@ -1,11 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    app.openshift.io/connects-to: mlbparks, nationalparks
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2023-09-09T03:45:09Z"
-  generation: 7
   labels:
     app: workshop
     app.kubernetes.io/part-of: workshop
@@ -15,10 +10,7 @@ metadata:
     createdBy: parksmap-template
     deploymentConfig: parksmap
     role: frontend
-    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
   name: parksmap
-  resourceVersion: "367182"
-  uid: afb03d77-3d52-4793-93ad-f4db2b7a50df
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

@@ -1,22 +1,13 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  annotations:
-    openshift.io/host.generated: "true"
-  creationTimestamp: "2023-09-09T03:45:09Z"
   labels:
     app: workshop
-    app.kubernetes.io/part-of: workshop
-    app.openshift.io/component: parksmap
     component: parksmap
     createdBy: parksmap-template
     role: frontend
-    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
   name: parksmap
-  resourceVersion: "276628"
-  uid: bbc987ab-b344-452e-a04d-5bbe82c2331c
 spec:
-  host: parksmap-parksmap-demo.apps.jybmv5wb.eastus.aroapp.io
   port:
     targetPort: 8080-tcp
   to:

@@ -1,18 +1,11 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    template.alpha.openshift.io/wait-for-ready: "true"
-  creationTimestamp: "2023-09-09T04:45:41Z"
-  generation: 12
   labels:
     app.kubernetes.io/part-of: workshop
     app.openshift.io/runtime: mongodb
     template: mongodb-persistent-template
-    template.openshift.io/template-instance-owner: 58e26e1e-1f08-4295-9b3c-fa22c5edaceb
   name: mongodb-nationalparks
-  resourceVersion: "839427"
-  uid: 3640c91e-6055-4032-9d0c-496fe868b8ce
 spec:
   replicas: 1
   revisionHistoryLimit: 10
