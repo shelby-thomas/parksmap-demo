@@ -9,7 +9,7 @@ metadata:
   name: mongodb-nationalparks
   namespace: parksmap-demo
 spec:
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     name: mongodb-nationalparks
