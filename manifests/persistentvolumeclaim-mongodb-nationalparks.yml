@@ -1,21 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  annotations:
-    pv.kubernetes.io/bind-completed: "yes"
-    pv.kubernetes.io/bound-by-controller: "yes"
-    volume.beta.kubernetes.io/storage-provisioner: disk.csi.azure.com
-    volume.kubernetes.io/selected-node: aro-cluster-4spxx-d9xrc-worker-eastus1-jtbjr
-    volume.kubernetes.io/storage-provisioner: disk.csi.azure.com
-  creationTimestamp: "2023-09-09T04:45:41Z"
-  finalizers:
-  - kubernetes.io/pvc-protection
-  labels:
-    template: mongodb-persistent-template
-    template.openshift.io/template-instance-owner: 58e26e1e-1f08-4295-9b3c-fa22c5edaceb
   name: mongodb-nationalparks
-  resourceVersion: "327732"
-  uid: 500b79df-925e-4061-a570-083f9d827d15
 spec:
   accessModes:
   - ReadWriteOnce
@@ -23,11 +9,5 @@ spec:
     requests:
       storage: 1Gi
 # storageClassName: managed-csi
-# volumeMode: Filesystem
+  volumeMode: Filesystem
 # volumeName: mongodb-nationalparks
-status:
-  accessModes:
-  - ReadWriteOnce
-  capacity:
-    storage: 1Gi
-  phase: Bound
