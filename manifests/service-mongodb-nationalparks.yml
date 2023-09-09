@@ -3,9 +3,6 @@ kind: Service
 metadata:
   name: mongodb-nationalparks
 spec:
-  clusterIP: 172.30.252.40
-  clusterIPs:
-  - 172.30.252.40
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
@@ -19,5 +16,4 @@ spec:
     name: mongodb-nationalparks
   sessionAffinity: None
   type: ClusterIP
-status:
-  loadBalancer: {}
+

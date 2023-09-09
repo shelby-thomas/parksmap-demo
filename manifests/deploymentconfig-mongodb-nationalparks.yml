@@ -84,28 +84,4 @@ spec:
       lastTriggeredImage: mongo@sha256:f493e0950c1c9b76ea0cdda9c2940c6d6360b60ac651b3e780f3eb6485e29fb0
     type: ImageChange
   - type: ConfigChange
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2023-09-09T04:46:01Z"
-    lastUpdateTime: "2023-09-09T04:46:01Z"
-    message: replication controller "mongodb-nationalparks-1" successfully rolled
-      out
-    reason: NewReplicationControllerAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2023-09-09T15:15:06Z"
-    lastUpdateTime: "2023-09-09T15:15:06Z"
-    message: Deployment config has minimum availability.
-    status: "True"
-    type: Available
-  details:
-    causes:
-    - type: ConfigChange
-    message: config change
-  latestVersion: 1
-  observedGeneration: 12
-  readyReplicas: 1
-  replicas: 1
-  unavailableReplicas: 0
-  updatedReplicas: 1
+

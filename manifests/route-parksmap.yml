@@ -15,13 +15,4 @@ spec:
     name: parksmap
     weight: 100
   wildcardPolicy: None
-status:
-  ingress:
-  - conditions:
-    - lastTransitionTime: "2023-09-09T03:45:09Z"
-      status: "True"
-      type: Admitted
-    host: parksmap-parksmap-demo.apps.jybmv5wb.eastus.aroapp.io
-    routerCanonicalHostname: router-default.apps.jybmv5wb.eastus.aroapp.io
-    routerName: default
-    wildcardPolicy: None
+

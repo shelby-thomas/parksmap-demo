@@ -106,27 +106,4 @@ spec:
   test: false
   triggers:
   - type: ConfigChange
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2023-09-09T15:25:34Z"
-    lastUpdateTime: "2023-09-09T15:25:34Z"
-    message: replication controller "nationalparks-15" successfully rolled out
-    reason: NewReplicationControllerAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2023-09-09T15:26:05Z"
-    lastUpdateTime: "2023-09-09T15:26:05Z"
-    message: Deployment config has minimum availability.
-    status: "True"
-    type: Available
-  details:
-    causes:
-    - type: ConfigChange
-    message: config change
-  latestVersion: 15
-  observedGeneration: 33
-  readyReplicas: 1
-  replicas: 1
-  unavailableReplicas: 0
-  updatedReplicas: 1
+
