@@ -3,9 +3,13 @@ kind: Route
 metadata:
   labels:
     app: workshop
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/component: parksmap
     component: parksmap
     createdBy: parksmap-template
     role: frontend
+  annotations:
+    openshift.io/host.generated: 'true'
   name: parksmap
 spec:
   port:

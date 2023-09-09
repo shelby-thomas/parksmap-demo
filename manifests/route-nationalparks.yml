@@ -4,7 +4,11 @@ metadata:
   labels:
     app: workshop
     component: nationalparks
+    createdBy: parksmap-template
     role: backend
+    type: parksmap-backend
+  annotations:
+    openshift.io/host.generated: 'true'
   name: nationalparks
 spec:
   port:

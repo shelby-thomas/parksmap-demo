@@ -4,7 +4,11 @@ metadata:
   labels:
     app: workshop
     component: nationalparks
+    createdBy: parksmap-template
     role: backend
+    type: parksmap-backend
+  annotations:
+    service.alpha.openshift.io/dependencies: '[{"name":"mongodb-nationalparks","namespace":"","kind":"Service"}]'
   name: nationalparks
 spec:
   internalTrafficPolicy: Cluster
