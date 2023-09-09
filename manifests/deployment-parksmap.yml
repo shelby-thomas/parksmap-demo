@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: mlbparks, nationalparks
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2023-09-09T03:45:09Z"
+  generation: 7
+  labels:
+    app: workshop
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/component: parksmap
+    app.openshift.io/runtime: spring-boot
+    component: parksmap
+    createdBy: parksmap-template
+    deploymentConfig: parksmap
+    role: frontend
+    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
+  name: parksmap
+  resourceVersion: "367182"
+  uid: afb03d77-3d52-4793-93ad-f4db2b7a50df
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: workshop
+      component: parksmap
+      role: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workshop
+        component: parksmap
+        role: frontend
+    spec:
+      containers:
+      - image: quay.io/openshiftroadshow/parksmap:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: parksmap
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-09-09T03:45:09Z"
+    lastUpdateTime: "2023-09-09T03:45:20Z"
+    message: ReplicaSet "parksmap-7b57c66d64" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2023-09-09T05:33:31Z"
+    lastUpdateTime: "2023-09-09T05:33:31Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 7
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

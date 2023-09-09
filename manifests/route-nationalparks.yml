@@ -1,0 +1,35 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  creationTimestamp: "2023-09-09T03:45:09Z"
+  labels:
+    app: workshop
+    component: nationalparks
+    createdBy: parksmap-template
+    role: backend
+    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
+    type: parksmap-backend
+  name: nationalparks
+  resourceVersion: "276610"
+  uid: 6cb4275d-cf37-4b73-b862-78ca1bbf0622
+spec:
+  host: nationalparks-parksmap-demo.apps.jybmv5wb.eastus.aroapp.io
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: nationalparks
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2023-09-09T03:45:09Z"
+      status: "True"
+      type: Admitted
+    host: nationalparks-parksmap-demo.apps.jybmv5wb.eastus.aroapp.io
+    routerCanonicalHostname: router-default.apps.jybmv5wb.eastus.aroapp.io
+    routerName: default
+    wildcardPolicy: None

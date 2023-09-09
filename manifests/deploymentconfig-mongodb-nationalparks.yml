@@ -1,0 +1,118 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    template.alpha.openshift.io/wait-for-ready: "true"
+  creationTimestamp: "2023-09-09T04:45:41Z"
+  generation: 12
+  labels:
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/runtime: mongodb
+    template: mongodb-persistent-template
+    template.openshift.io/template-instance-owner: 58e26e1e-1f08-4295-9b3c-fa22c5edaceb
+  name: mongodb-nationalparks
+  resourceVersion: "839427"
+  uid: 3640c91e-6055-4032-9d0c-496fe868b8ce
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    name: mongodb-nationalparks
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: mongodb-nationalparks
+    spec:
+      containers:
+      - env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: mongodb-nationalparks
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: mongodb-nationalparks
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-admin-password
+              name: mongodb-nationalparks
+        - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: mongodb-nationalparks
+        image: mongo@sha256:f493e0950c1c9b76ea0cdda9c2940c6d6360b60ac651b3e780f3eb6485e29fb0
+        imagePullPolicy: IfNotPresent
+        name: mongodb
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources:
+          limits:
+            memory: 512Mi
+        securityContext:
+          capabilities: {}
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongodb-nationalparks-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongodb-nationalparks-data
+        persistentVolumeClaim:
+          claimName: mongodb-nationalparks
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - mongodb
+      from:
+        kind: ImageStreamTag
+        name: mongodb:5.0
+        namespace: openshift
+      lastTriggeredImage: mongo@sha256:f493e0950c1c9b76ea0cdda9c2940c6d6360b60ac651b3e780f3eb6485e29fb0
+    type: ImageChange
+  - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-09-09T04:46:01Z"
+    lastUpdateTime: "2023-09-09T04:46:01Z"
+    message: replication controller "mongodb-nationalparks-1" successfully rolled
+      out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2023-09-09T15:15:06Z"
+    lastUpdateTime: "2023-09-09T15:15:06Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 12
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

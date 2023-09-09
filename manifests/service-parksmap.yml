@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2023-09-09T03:45:09Z"
+  labels:
+    app: workshop
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/component: parksmap
+    component: parksmap
+    createdBy: parksmap-template
+    role: frontend
+    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
+  name: parksmap
+  resourceVersion: "276614"
+  uid: b278dc30-b554-4456-a3aa-77212acddd38
+spec:
+  clusterIP: 172.30.32.209
+  clusterIPs:
+  - 172.30.32.209
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 8787-tcp
+    port: 8787
+    protocol: TCP
+    targetPort: 8787
+  selector:
+    component: parksmap
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

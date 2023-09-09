@@ -1,0 +1,141 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    app.openshift.io/connects-to: mongodb-nationalparks
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: https://github.com/openshift-roadshow/nationalparks.git
+  creationTimestamp: "2023-09-09T03:45:09Z"
+  generation: 33
+  labels:
+    app: workshop
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/runtime: spring-boot
+    component: nationalparks
+    createdBy: parksmap-template
+    role: backend
+    template.openshift.io/template-instance-owner: 4e4d6907-06c2-4aee-9be6-cbd0546ae9e9
+  name: nationalparks
+  resourceVersion: "848443"
+  uid: 280fd8c2-f8a0-4c22-89b9-c8693b3e3bf6
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: workshop
+    component: nationalparks
+    deploymentConfig: nationalparks
+    role: database
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workshop
+        component: nationalparks
+        deploymentConfig: nationalparks
+        role: database
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: OPENSHIFT_KUBE_PING_LABELS
+          value: component=nationalparks
+        - name: OPENSHIFT_KUBE_PING_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: MONGODB_SERVER_PORT
+          value: "27017"
+        - name: MONGODB_SERVER_HOST
+          value: mongodb-nationalparks
+        - name: MONGODB_USER
+          value: mongodb
+        - name: MONGODB_PASSWORD
+          value: mongodb
+        - name: MONGODB_DATABASE
+          value: admin
+        envFrom:
+        - secretRef:
+            name: mongodb-nationalparks
+        image: quay.io/erkanercan/nationalparks:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ws/healthz/
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: nationalparks
+        ports:
+        - containerPort: 8787
+          name: debug
+          protocol: TCP
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8888
+          name: ping
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ws/healthz/
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-09-09T15:25:34Z"
+    lastUpdateTime: "2023-09-09T15:25:34Z"
+    message: replication controller "nationalparks-15" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2023-09-09T15:26:05Z"
+    lastUpdateTime: "2023-09-09T15:26:05Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 15
+  observedGeneration: 33
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
