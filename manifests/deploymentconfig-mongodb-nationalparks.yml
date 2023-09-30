@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/part-of: workshop
     app.openshift.io/runtime: mongodb
-    vm.kubevirt.io/name: mongodb-nationalparks
   name: mongodb-nationalparks
 spec:
   replicas: 1

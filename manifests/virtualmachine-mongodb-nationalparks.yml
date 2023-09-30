@@ -47,6 +47,7 @@ spec:
         os.template.kubevirt.io/centos8: "true"
         vm.kubevirt.io/name: mongodb-nationalparks
         workload.template.kubevirt.io/server: "true"
+        name: mongodb-nationalparks
     spec:
       domain:
         cpu:
