@@ -21,12 +21,7 @@ spec:
     protocol: TCP
     targetPort: 27017
   selector:
-    flavor.template.kubevirt.io/small: "true"
-    kubevirt.io/domain: mongodb-nationalparks
-    kubevirt.io/size: small
-    os.template.kubevirt.io/centos8: "true"
-    vm.kubevirt.io/name: mongodb-nationalparks
-    workload.template.kubevirt.io/server: "true"
+    name: mongodb-nationalparks
   sessionAffinity: None
   type: ClusterIP
 
