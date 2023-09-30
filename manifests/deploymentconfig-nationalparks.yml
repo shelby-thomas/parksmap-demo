@@ -60,7 +60,7 @@ spec:
         - name: MONGODB_PASSWORD
           value: mongodb
         - name: MONGODB_DATABASE
-          value: admin
+          value: mongodb
         envFrom:
         - secretRef:
             name: mongodb-nationalparks
