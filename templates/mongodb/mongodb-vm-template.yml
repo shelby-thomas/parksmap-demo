@@ -13,11 +13,11 @@ metadata:
       this service.
     openshift.io/provider-display-name: Red Hat Turkey Solution Architect Team
     tags: database,mongodb
-  creationTimestamp: "2023-09-29T01:15:46Z"
+  creationTimestamp: "2023-09-29T22:23:20Z"
   name: mongodb-vm-template
   namespace: openshift
-  resourceVersion: "187313"
-  uid: 41d3bfe6-d14e-48ec-97d0-c650ddeda65b
+  resourceVersion: "1499676"
+  uid: 8f0b23ec-a21d-464a-91d7-a30daf27c30b
 objects:
 - apiVersion: v1
   kind: Service
@@ -73,12 +73,12 @@ objects:
           - ReadWriteMany
           resources:
             requests:
-              storage: 20Gi
+              storage: 30Gi
           storageClassName: ocs-storagecluster-ceph-rbd
           volumeMode: Block
         source:
           pvc:
-            name: centos8
+            name: centos-stream8-41340bf85275
             namespace: openshift-virtualization-os-images
     running: true
     template:
@@ -126,6 +126,11 @@ objects:
         - name: nic-0
           pod: {}
         terminationGracePeriodSeconds: 180
+        tolerations:
+        - effect: NoSchedule
+          key: metal
+          operator: Equal
+          value: "true"
         volumes:
         - dataVolume:
             name: ${MONGODB_APPLICATION_NAME}-rootdisk

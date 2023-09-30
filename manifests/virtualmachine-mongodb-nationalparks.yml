@@ -1,0 +1,123 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: mongodb
+    app.kubernetes.io/part-of: workshop
+    flavor.template.kubevirt.io/small: "true"
+    kubevirt.io/domain: mongodb-nationalparks
+    kubevirt.io/size: small
+    os.template.kubevirt.io/centos8: "true"
+    vm.kubevirt.io/name: mongodb-nationalparks
+    workload.template.kubevirt.io/server: "true"
+  name: mongodb-nationalparks
+  namespace: parksmap-demo
+spec:
+  dataVolumeTemplates:
+  - apiVersion: cdi.kubevirt.io/v1alpha1
+    kind: DataVolume
+    metadata:
+      creationTimestamp: null
+      name: mongodb-nationalparks-rootdisk
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 30Gi
+        storageClassName: ocs-storagecluster-ceph-rbd
+        volumeMode: Block
+      source:
+        pvc:
+          name: centos-stream8-41340bf85275
+          namespace: openshift-virtualization-os-images
+  running: true
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: small
+        vm.kubevirt.io/os: centos8
+        vm.kubevirt.io/workload: server
+      creationTimestamp: null
+      labels:
+        flavor.template.kubevirt.io/small: "true"
+        kubevirt.io/domain: mongodb-nationalparks
+        kubevirt.io/size: small
+        os.template.kubevirt.io/centos8: "true"
+        vm.kubevirt.io/name: mongodb-nationalparks
+        workload.template.kubevirt.io/server: "true"
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - bootOrder: 1
+            disk:
+              bus: virtio
+            name: mongodb-nationalparks-rootdisk
+          - disk:
+              bus: virtio
+            name: cloudinitdisk
+          interfaces:
+          - macAddress: 02:63:2d:00:00:07
+            masquerade: {}
+            model: virtio
+            name: nic-0
+          networkInterfaceMultiqueue: true
+          rng: {}
+        machine:
+          type: pc-q35-rhel8.4.0
+        resources:
+          requests:
+            memory: 2Gi
+      evictionStrategy: LiveMigrate
+      hostname: mongodb-nationalparks
+      networks:
+      - name: nic-0
+        pod: {}
+      terminationGracePeriodSeconds: 180
+      tolerations:
+      - effect: NoSchedule
+        key: metal
+        operator: Equal
+        value: "true"
+      volumes:
+      - dataVolume:
+          name: mongodb-nationalparks-rootdisk
+        name: mongodb-nationalparks-rootdisk
+      - cloudInitNoCloud:
+          userData: |-
+            #cloud-config
+            user: redhat
+            password: openshift
+            chpasswd: { expire: False }
+            yum_repos:
+              mongodb-org-3.6:
+                baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.6/x86_64/
+                enabled: true
+                gpgcheck: true
+                gpgkey: https://www.mongodb.org/static/pgp/server-3.6.asc
+                name: MongoDB Repository
+            packages:
+              - bash-completion
+              - mongodb-org
+            runcmd:
+              - systemctl daemon-reload
+              - systemctl enable mongod.service
+              - systemctl start mongod.service
+              - >
+                mongo admin --host localhost --eval "db.createUser({user: 'root', pwd: 'mongodb', roles: [{role: 'root', db: 'admin'}]});"
+              - >
+                mongo admin --host localhost --eval "db.getSiblingDB('mongodb').createUser({user: 'mongodb', pwd: 'mongodb', roles: [{role: 'dbOwner', db: 'mongodb'}]});"
+              - >
+                sed -i -e 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g' /etc/mongod.conf
+              - >
+                sed -i -e 's/^#security:/security:/g' /etc/mongod.conf
+              - >
+                sed -i -e '/^security:/a \  authorization: enabled' /etc/mongod.conf
+              - systemctl restart mongod.service
+        name: cloudinitdisk

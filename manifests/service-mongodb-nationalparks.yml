@@ -2,11 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    template: mongodb-ephemeral-template
-  annotations:
-    template.openshift.io/expose-uri: 'mongodb://{.spec.clusterIP}:{.spec.ports[?(.name=="mongo")].port}'
+    app: mongodb
+    component: mongodb-nationalparks
+    role: database
   name: mongodb-nationalparks
+  namespace: parksmap-demo
 spec:
+  clusterIP: 172.30.188.72
+  clusterIPs:
+  - 172.30.188.72
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
@@ -17,7 +21,12 @@ spec:
     protocol: TCP
     targetPort: 27017
   selector:
-    name: mongodb-nationalparks
+    flavor.template.kubevirt.io/small: "true"
+    kubevirt.io/domain: mongodb-nationalparks
+    kubevirt.io/size: small
+    os.template.kubevirt.io/centos8: "true"
+    vm.kubevirt.io/name: mongodb-nationalparks
+    workload.template.kubevirt.io/server: "true"
   sessionAffinity: None
   type: ClusterIP
 
