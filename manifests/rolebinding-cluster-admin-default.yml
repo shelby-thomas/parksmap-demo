@@ -1,11 +1,8 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: "2023-09-30T20:20:35Z"
   name: cluster-admin-default
   namespace: parksmap-demo
-  resourceVersion: "2306688"
-  uid: ba477822-b09f-4d2f-b74b-c204fd98b08e
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
