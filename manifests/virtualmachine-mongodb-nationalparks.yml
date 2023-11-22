@@ -22,11 +22,11 @@ spec:
     spec:
       pvc:
         accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
         resources:
           requests:
             storage: 30Gi
-        storageClassName: ocs-storagecluster-ceph-rbd
+        storageClassName: gp3-csi
         volumeMode: Block
       source:
         pvc:
