@@ -81,11 +81,6 @@ spec:
       - name: nic-0
         pod: {}
       terminationGracePeriodSeconds: 180
-      tolerations:
-      - effect: NoSchedule
-        key: metal
-        operator: Equal
-        value: "true"
       volumes:
       - dataVolume:
           name: mongodb-nationalparks-rootdisk
